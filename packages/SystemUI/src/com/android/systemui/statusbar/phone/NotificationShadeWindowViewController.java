@@ -199,6 +199,7 @@ public class NotificationShadeWindowViewController {
                 case Settings.Secure.DOZE_TAP_SCREEN_GESTURE:
                     mSingleTapEnabled = configuration.tapGestureEnabled(UserHandle.USER_CURRENT);
                     break;
+
                 case QS_SHOW_AUTO_BRIGHTNESS_BUTTON:
                     if (mAutoBrightnessIcon != null) {
                         mShowAutoBrightnessButton = (newValue == null ||
