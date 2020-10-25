@@ -180,4 +180,5 @@ interface IStatusBarService
     void setBlockedGesturalNavigation(boolean blocked);
 
     void killForegroundApp();
+    void screenPinningStateChanged(boolean enabled);
 }
