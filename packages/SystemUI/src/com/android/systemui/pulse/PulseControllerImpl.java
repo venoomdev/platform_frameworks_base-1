@@ -108,7 +108,6 @@ public class PulseControllerImpl
 
     private boolean mNavPulseEnabled;
     private boolean mLsPulseEnabled;
-    private boolean mAmbPulseEnabled;
     private boolean mKeyguardShowing;
     private boolean mDozing;
     private boolean mKeyguardGoingAway;
@@ -182,9 +181,6 @@ public class PulseControllerImpl
                     Settings.Secure.getUriFor(Settings.Secure.LOCKSCREEN_PULSE_ENABLED), false, this,
                     UserHandle.USER_ALL);
             mContext.getContentResolver().registerContentObserver(
-                    Settings.Secure.getUriFor(Settings.Secure.AMBIENT_PULSE_ENABLED), false, this,
-                    UserHandle.USER_ALL);
-            mContext.getContentResolver().registerContentObserver(
                     Settings.Secure.getUriFor(Settings.Secure.PULSE_RENDER_STYLE), false, this,
                     UserHandle.USER_ALL);
         }
@@ -192,8 +188,7 @@ public class PulseControllerImpl
         @Override
         public void onChange(boolean selfChange, Uri uri) {
             if (uri.equals(Settings.Secure.getUriFor(Settings.Secure.NAVBAR_PULSE_ENABLED))
-                    || uri.equals(Settings.Secure.getUriFor(Settings.Secure.LOCKSCREEN_PULSE_ENABLED))
-                    || uri.equals(Settings.Secure.getUriFor(Settings.Secure.AMBIENT_PULSE_ENABLED))) {
+                    || uri.equals(Settings.Secure.getUriFor(Settings.Secure.LOCKSCREEN_PULSE_ENABLED))) {
                 updateEnabled();
                 updatePulseVisibility();
             } else if (uri.equals(Settings.Secure.getUriFor(Settings.Secure.PULSE_RENDER_STYLE))) {
@@ -212,8 +207,6 @@ public class PulseControllerImpl
                     Settings.Secure.NAVBAR_PULSE_ENABLED, 0, UserHandle.USER_CURRENT) == 1;
             mLsPulseEnabled = Settings.Secure.getIntForUser(mContext.getContentResolver(),
                     Settings.Secure.LOCKSCREEN_PULSE_ENABLED, 1, UserHandle.USER_CURRENT) == 1;
-            mAmbPulseEnabled = Settings.Secure.getIntForUser(mContext.getContentResolver(),
-                    Settings.Secure.AMBIENT_PULSE_ENABLED, 0, UserHandle.USER_CURRENT) == 1;
         }
 
         void updateRenderMode() {
@@ -236,8 +229,6 @@ public class PulseControllerImpl
         NavigationBarFrame nv = mStatusbar.getNavigationBarView() != null ?
                 mStatusbar.getNavigationBarView().getNavbarFrame() : null;
         VisualizerView vv = mStatusbar.getLsVisualizer();
-        boolean allowAmbPulse = vv != null && vv.isAttached()
-                && mAmbPulseEnabled && mKeyguardShowing && mDozing;
         boolean allowLsPulse = vv != null && vv.isAttached()
                 && mLsPulseEnabled && mKeyguardShowing && !mDozing;
         boolean allowNavPulse = nv!= null && nv.isAttached()
@@ -248,13 +239,13 @@ public class PulseControllerImpl
             return;
         }
         if (!allowNavPulse) {
-            detachPulseFrom(nv, allowLsPulse || allowAmbPulse/*keep linked*/);
+            detachPulseFrom(nv, allowLsPulse/*keep linked*/);
         }
-        if (!allowLsPulse && !allowAmbPulse) {
+        if (!allowLsPulse) {
             detachPulseFrom(vv, allowNavPulse/*keep linked*/);
         }
 
-        if (allowLsPulse || allowAmbPulse) {
+        if (allowLsPulse) {
             attachPulseTo(vv);
         } else if (allowNavPulse) {
             attachPulseTo(nv);
@@ -446,7 +437,7 @@ public class PulseControllerImpl
      * @return true if unlink is required, false if unlinking is not mandatory
      */
     private boolean isUnlinkRequired() {
-        return (!mScreenOn && !mAmbPulseEnabled)
+        return !mScreenOn
                 || mPowerSaveModeEnabled
                 || mMusicStreamMuted
                 || mScreenPinningEnabled
@@ -459,7 +450,7 @@ public class PulseControllerImpl
      * @return true if all conditions are met to allow link, false if and conditions are not met
      */
     private boolean isAbleToLink() {
-        return (mScreenOn || mAmbPulseEnabled)
+        return mScreenOn
                 && mIsMediaPlaying
                 && !mPowerSaveModeEnabled
                 && !mMusicStreamMuted
