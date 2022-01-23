@@ -174,9 +174,4 @@ public interface StatusBarManagerInternal {
      * @see com.android.internal.statusbar.IStatusBar#setUdfpsHbmListener(IUdfpsHbmListener)
      */
     void setUdfpsHbmListener(IUdfpsHbmListener listener);
-
-    /**
-     * Window manager notifies SystemUI of navigation bar "left in landscape" changes
-     */
-    void leftInLandscapeChanged(boolean isLeft);
 }
