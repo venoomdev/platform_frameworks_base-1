@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.android.keyguard.clock.ClockLayout
+    android:layout_gravity="top"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layoutDirection="ltr"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:androidprv="http://schemas.android.com/apk/prv/res/android">
+    <LinearLayout
+        android:layout_gravity="center_horizontal"
+        android:orientation="vertical"
+        android:id="@id/clock_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layoutDirection="ltr">
+        <TextClock
+            android:textSize="100.0dip"
+            android:textColor="?android:colorAccent"
+            android:ellipsize="none"
+            android:gravity="center_horizontal"
+            android:layout_gravity="center"
+            android:id="@id/time_clock_accented"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:format12Hour="h"
+            android:format24Hour="kk" />
+        <TextClock
+            android:textSize="100.0dip"
+            android:textColor="?wallpaperTextColorSecondary"
+            android:ellipsize="none"
+            android:layout_gravity="center"
+            android:id="@id/minute_clock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:format12Hour="mm"
+            android:format24Hour="mm" />
+        <TextClock
+            android:textSize="20.0dip"
+            android:textColor="?wallpaperTextColorSecondary"
+            android:ellipsize="none"
+            android:layout_gravity="center"
+            android:id="@id/timedate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4.0dip"
+            android:format12Hour="EEE, MMM d"
+            android:format24Hour="EEE, MMM d" />
+    </LinearLayout>
+</com.android.keyguard.clock.ClockLayout>
