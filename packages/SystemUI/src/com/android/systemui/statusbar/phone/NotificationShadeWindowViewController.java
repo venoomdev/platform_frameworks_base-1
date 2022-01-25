@@ -214,10 +214,11 @@ public class NotificationShadeWindowViewController {
                     break;
             }
         };
+
         mTunerService.addTunable(tunable,
                 Settings.Secure.DOZE_DOUBLE_TAP_GESTURE,
                 Settings.Secure.DOZE_TAP_SCREEN_GESTURE,
-                QS_SHOW_AUTO_BRIGHTNESS_BUTTON);
+                QS_SHOW_AUTO_BRIGHTNESS_BUTTON,
                 Settings.Secure.DOUBLE_TAP_TO_WAKE);
 
         GestureDetector.SimpleOnGestureListener gestureListener =

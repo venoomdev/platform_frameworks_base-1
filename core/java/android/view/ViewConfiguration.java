@@ -561,18 +561,6 @@ public class ViewConfiguration {
     }
 
     /**
-     * @hide
-     */
-    public static boolean isNumeric(String string) {
-        try {
-            Integer.parseInt(string);
-        } catch(NumberFormatException e) {
-            return false;
-        }
-        return true;
-    }
-
-    /**
      * Returns a configuration for the specified visual {@link Context}. The configuration depends
      * on various parameters of the {@link Context}, like the dimension of the display or the
      * density of the display.
