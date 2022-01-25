@@ -144,6 +144,7 @@ applications that come with the platform
         <permission name="android.permission.SUBSTITUTE_NOTIFICATION_APP_NAME"/>
         <permission name="android.permission.UPDATE_APP_OPS_STATS"/>
         <permission name="android.permission.USE_RESERVED_DISK"/>
+        <permission name="android.permission.WRITE_APN_SETTINGS"/>
         <permission name="com.google.android.permission.INSTALL_WEARABLE_PACKAGES"/>
     </privapp-permissions>
 
